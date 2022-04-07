@@ -15,11 +15,18 @@ def feature_2(df):
     return df
 
 def feature_3(df):
-    df['number_customer_service_calls_binned'] = df['number_customer_service_calls'].apply(lambda x:  0 if x>=4 else 1)
+    voice_internationa_plan=df[(df['international_plan'] =='yes') & (df['voice_mail_plan'] =='yes') ]
+    df['voice_international_subscriber_encoded'] = 0
+    df['voice_international_subscriber_encoded'][voice_internationa_plan.index] =1
+    return df
+
+def feature_4(df):
+    minutes=  df['total_intl_minutes'].apply(lambda x : x if x >0 else 0.01)
+    df['intl_charge_per_minutes'] = df['total_intl_charge']/minutes
     return df
 
 
-def feature_engineering(df , feature1 =True , feature2 = True , feature3=True  ):
+def feature_engineering(df , feature1 =True , feature2 = True , feature3=True  ,feature4 =True ):
     result = df.copy()
     
     if feature1 : 
@@ -28,6 +35,8 @@ def feature_engineering(df , feature1 =True , feature2 = True , feature3=True  )
         result = feature_2(result)
     if feature3:
         result = feature_3(result)
+    if feature4:
+        result = feature_4(result)
         
     return result 
 
@@ -85,21 +94,20 @@ def remove_outliers(df, cols, group , delete= True , verbose = True):
 
         
         
-not_normal_distributed_cols = ['number_customer_service_calls' , 'number_vmail_messages']
 
 def standarize_numerical(df, cols):
     result = df.copy() 
-    
+    print("standarized cols: " , cols)
     for column in cols:
         if result.dtypes[column] != np.object:
             result[column] = StandardScaler().fit_transform(result[[column]]) 
+            
     return result
 
 
 def normalize_numerical(df, cols):
     result = df.copy() 
-    
-    normal_distributed_cols = np.setdiff1d(df.columns.values,not_normal_distributed_cols)
+    print("normalized cols: " , cols)
     for column in cols:
         if result.dtypes[column] != np.object:
             result[column] = RobustScaler().fit_transform(result[[column]]) 
@@ -113,6 +121,7 @@ def features_scaling(df):
     numrical_columns= df.columns[ df.dtypes != np.object].values
     not_normal_distributed_cols = ['number_customer_service_calls' , 'number_vmail_messages']
     normal_distributed_cols = np.setdiff1d(numrical_columns,not_normal_distributed_cols) 
+    #normal_distributed_cols = np.setdiff1d(normal_distributed_cols,['voice_international_subscriber_encoded']) # voice_international_subscriber_encoded Already has 0s and 1s onyly
     result= normalize_numerical(result, not_normal_distributed_cols)
     result = standarize_numerical(result, normal_distributed_cols)
 
@@ -126,13 +135,11 @@ def features_selection(df, featurized):
     result = df.copy() 
     
     if(featurized):
-        result= result.drop(['total_minutes' ,
+        result= result.drop([
                              'total_day_charge' ,
                              'total_night_charge',
-                             'total_intl_charge' ,
                              'total_eve_charge' , 
-                             'total_day_minutes'  ,
-                             'number_customer_service_calls' ] , axis= 1)
+                             'total_day_minutes'] , axis= 1)
     else :
         result = result.drop(['total_night_minutes',
                               'total_intl_minutes' ,
@@ -167,20 +174,23 @@ def BinaryEncoder(df,col):
 
     return result , encoded_col_named
 
-def encoder(df):
+def encoder(df,target_encoding =True):
     result =df.copy()
+    label_cat_cols = ['international_plan' ,
+                      'voice_mail_plan' ]
+    encoded_label_cat_cols = ['international_plan_encoded' ,
+                              'voice_mail_plan_encoded' ]
+    if target_encoding:
+        label_cat_cols += ['churn']
+        encoded_label_cat_cols+= ['churn_encoded']
+        
+    for col in label_cat_cols:
+        result=labelEncoder(result,col) 
+
     
-    result = labelEncoder(result , 'churn')
-    result = labelEncoder(result , 'international_plan')
-    result = labelEncoder(result , 'voice_mail_plan')
     result , encoded_col_names  = BinaryEncoder(result , 'state')
-    result.drop(['churn' ,
-                 'international_plan' ,
-                 'voice_mail_plan' ,
-                 'state' ],axis = 1 , inplace = True)
-    encoded_col_names = np .append(encoded_col_names, ['churn_encoded' ,
-                                                       'international_plan_encoded' ,
-                                                       'voice_mail_plan_encoded'], axis=None) 
+    result.drop(label_cat_cols+['state'],axis = 1 , inplace = True)
+    encoded_col_names = np .append(encoded_col_names,encoded_label_cat_cols+['state_encoded'], axis=None) 
     
     return result ,encoded_col_names
 
