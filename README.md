@@ -13,7 +13,7 @@ The problem and the dataset can be found on  <a href="https://www.kaggle.com/c/c
   <img src="material/Flowchart.png"  width="500" height="720"/>
 </p>
 
-Generally, the solution contatins: *Data Analysis*, *Data Visualization*, *Outliers Handling*,*Feature Engineering*,*Chi2 Test(Hypothesis Testing)*, *Encoding Techniques*, *Oversanpling Knn-Based Technique(SMOTE)* ,*Random Forest* and more ..
+Generally, the solution contatins: *Data Analysis*, *Data Visualization*, *Outliers Handling*,*Feature Engineering*,*Chi2 Test(Hypothesis Testing)*, *Encoding Techniques*, *Oversampling Knn-Based Technique(SMOTE)* ,*Random Forest* and more ..
 
 
 
@@ -25,9 +25,13 @@ Generally, the solution contatins: *Data Analysis*, *Data Visualization*, *Outli
 
 **Kaggle Submission Score** 
 
+(**2nd Highest Score**)
+
 <p align="center">
   <img src="material/kaggle results.jpeg" />
 </p>
+
+
 
 
 
