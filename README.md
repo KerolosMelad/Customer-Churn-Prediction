@@ -6,8 +6,13 @@ The problem and the dataset can be found on  <a href="https://www.kaggle.com/c/c
 
 **Solution Structure**
 
+
+
+**Kaggle Submission Score ** 
+
 <p align="center">
-  <img src="material/Flowchart.png" />
+  <img src="material/kaggle results.jpeg" />
 </p>
+
 
 
