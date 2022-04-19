@@ -10,7 +10,7 @@ The problem and the dataset can be found on  <a href="https://www.kaggle.com/c/c
 
 
 <p align="center">
-  <img src="material/Flowchart.png"  width="720" height="720"/>
+  <img src="material/Flowchart.png"  width="500" height="720"/>
 </p>
 
 
