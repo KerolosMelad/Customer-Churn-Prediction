@@ -1,4 +1,4 @@
-# Customer-Churn-Prediction
+# Customer Churn Prediction
 
 **Problem  Overview**
 
