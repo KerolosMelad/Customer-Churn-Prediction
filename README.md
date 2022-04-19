@@ -8,7 +8,13 @@ The problem and the dataset can be found on  <a href="https://www.kaggle.com/c/c
 
 
 
-**Kaggle Submission Score ** 
+**Local Testing Score** 
+
+<p align="center">
+  <img src="material/local results.png" />
+</p>
+
+**Kaggle Submission Score** 
 
 <p align="center">
   <img src="material/kaggle results.jpeg" />
