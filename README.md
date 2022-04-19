@@ -9,6 +9,9 @@ The problem and the dataset can be found on  <a href="https://www.kaggle.com/c/c
 **Solution Structure**
 
 
+<p align="center">
+  <img src="material/Flowchart.png"  width="128" height="128"/>
+</p>
 
 
 
