@@ -25,7 +25,7 @@ Generally, the solution contatins: *Data Analysis*, *Data Visualization*, *Outli
 
 **Kaggle Submission Score** 
 
-(**2nd Highest Score**)
+(**2nd Highest Score on Kaggle**)
 
 <p align="center">
   <img src="material/kaggle results.jpeg" />
